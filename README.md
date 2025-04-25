@@ -109,12 +109,11 @@ DeviceNetworkEvents
 
 | **Timestamp (UTC)**              | **Event Description**                                                 |
 |----------------------------------|------------------------------------------------------------------------|
-| 2024-11-08T22:14:48              | TOR installer downloaded to `Downloads` folder                        |
-| 2024-11-08T22:16:47              | Silent installation of TOR initiated                                  |
-| 2024-11-08T22:17:21              | TOR browser launched via `firefox.exe` and `tor.exe`                  |
-| 2024-11-08T22:18:01              | Connection to `176.198.159.33:9001` established via `tor.exe`         |
-| 2024-11-08T22:18:08 - 22:18:16   | Additional connections to `194.164.169.85:443` and `127.0.0.1:9150`   |
-| 2024-11-08T22:27:19              | `tor-shopping-list.txt` file created on Desktop                       |
+| Apr 24, 2025 5:12:01 PM          | TOR installer downloaded to `Downloads` folder                        |
+| Apr 24, 2025 5:16:40 PM          | Silent installation of TOR initiated                                  |
+| Apr 24, 2025 5:20:40 PM          | TOR browser launched via `firefox.exe` and `tor.exe`                  |
+| 2024-11-08T22:18:01              | Connection to 65.21.219.130:443 established via tor.exe
+| Apr 24, 2025 5:25:28 PM          | `tor-shopping-list.txt` file created on Desktop                       |
 
 ---
 
