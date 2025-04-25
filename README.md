@@ -46,11 +46,10 @@ DeviceFileEvents
 | where FileName has_any ("tor")
 | order by Timestamp desc
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
-![tor1](https://github.com/user-attachments/assets/ce20244c-5201-4646-bc8c-ccb3127d50d5)
 
-![tor1](https://github.com/user-attachments/assets/2a84964f-00b0-4310-94f8-a79018e693ea)
 
 ```
+![tor1](https://github.com/user-attachments/assets/2a84964f-00b0-4310-94f8-a79018e693ea)
 
 ---
 
