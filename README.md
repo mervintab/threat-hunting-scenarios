@@ -48,6 +48,7 @@ DeviceFileEvents
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
 ![tor1](https://github.com/user-attachments/assets/ce20244c-5201-4646-bc8c-ccb3127d50d5)
 
+![tor1](https://github.com/user-attachments/assets/2a84964f-00b0-4310-94f8-a79018e693ea)
 
 ```
 
@@ -62,7 +63,7 @@ TOR was installed silently via an executable run from the Downloads folder.
 ```kql
 DeviceProcessEvents
 | where DeviceName == "merv-winten-lab"
-| where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-14.0.1.exe"
+| where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-14.5.exe"
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, SHA256, ProcessCommandLine
 ```
 ![tor2](https://github.com/user-attachments/assets/15c8064b-bf99-436f-8a7d-a64a5d6bec0f)
