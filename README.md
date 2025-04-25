@@ -46,8 +46,9 @@ DeviceFileEvents
 | where FileName has_any ("tor")
 | order by Timestamp desc
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
+![tor1](https://github.com/user-attachments/assets/ce20244c-5201-4646-bc8c-ccb3127d50d5)
 
-![Image1](assets/tor1.png)
+
 ```
 
 ---
@@ -64,6 +65,7 @@ DeviceProcessEvents
 | where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-14.0.1.exe"
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, SHA256, ProcessCommandLine
 ```
+![tor2](https://github.com/user-attachments/assets/15c8064b-bf99-436f-8a7d-a64a5d6bec0f)
 
 ---
 
@@ -80,6 +82,7 @@ DeviceProcessEvents
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, SHA256, ProcessCommandLine
 | order by Timestamp desc
 ```
+![tor3](https://github.com/user-attachments/assets/4ed8415b-dfb0-4cd0-826a-52c01980664e)
 
 ---
 
@@ -98,6 +101,7 @@ DeviceNetworkEvents
 | project Timestamp, DeviceName, InitiatingProcessAccountName, ActionType, RemoteIP, RemotePort, RemoteUrl, InitiatingProcessFileName, InitiatingProcessFolderPath
 | order by Timestamp desc
 ```
+![tor4](https://github.com/user-attachments/assets/e2086484-2f62-46ef-80c5-15b4c8452e1a)
 
 ---
 
