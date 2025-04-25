@@ -34,7 +34,7 @@ threat-hunting-scenarios/
 │   └── ...
 │
 ├── assets/
-│   └── images, diagrams, screenshots
+│   └── images, diagrams, screenshots, guides
 │
 └── README.md
 ```
