@@ -47,6 +47,7 @@ DeviceFileEvents
 | order by Timestamp desc
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
 
+![Image1](assets/tor1.png)
 ```
 
 ---
