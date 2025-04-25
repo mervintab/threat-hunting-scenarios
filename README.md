@@ -42,12 +42,11 @@ User "employee" downloaded and extracted TOR browser files, including `tor-shopp
 **KQL Query:**
 ```kql
 DeviceFileEvents
-| where DeviceName == "threat-hunt-lab"
-| where InitiatingProcessAccountName == "employee"
-| where FileName contains "tor"
-| where Timestamp >= datetime(2024-11-08T22:14:48.6065231Z)
+| where DeviceName == "merv-winten-lab"
+| where FileName has_any ("tor")
 | order by Timestamp desc
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
+
 ```
 
 ---
@@ -60,7 +59,7 @@ TOR was installed silently via an executable run from the Downloads folder.
 **KQL Query:**
 ```kql
 DeviceProcessEvents
-| where DeviceName == "threat-hunt-lab"
+| where DeviceName == "merv-winten-lab"
 | where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-14.0.1.exe"
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, SHA256, ProcessCommandLine
 ```
@@ -75,7 +74,7 @@ The TOR browser and associated processes were launched, confirming execution.
 **KQL Query:**
 ```kql
 DeviceProcessEvents
-| where DeviceName == "threat-hunt-lab"
+| where DeviceName == "merv-winten-lab"
 | where FileName has_any ("tor.exe", "firefox.exe", "tor-browser.exe")
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, SHA256, ProcessCommandLine
 | order by Timestamp desc
@@ -91,7 +90,7 @@ TOR browser initiated multiple connections to known TOR ports and IP addresses.
 **KQL Query:**
 ```kql
 DeviceNetworkEvents
-| where DeviceName == "threat-hunt-lab"
+| where DeviceName == "merv-winten-lab"
 | where InitiatingProcessAccountName != "system"
 | where InitiatingProcessFileName in ("tor.exe", "firefox.exe")
 | where RemotePort in ("9001", "9030", "9040", "9050", "9051", "9150", "80", "443")
@@ -116,7 +115,7 @@ DeviceNetworkEvents
 
 ## 📌 Summary of Findings
 
-- The user `employee` on device `threat-hunt-lab` installed and ran the TOR browser.
+- The user `system` on device `merv-winten-lab` installed and ran the TOR browser.
 - Multiple TOR-related processes were observed.
 - Outbound TOR network traffic was confirmed.
 - A text file possibly referencing TOR usage was found and later deleted.
@@ -127,7 +126,7 @@ This strongly confirms unauthorized TOR activity by the employee.
 
 ## 🚨 Response Actions
 
-- Device `threat-hunt-lab` was isolated from the network.
+- Device `merv-winten-lab` was isolated from the network.
 - Direct manager of the user was notified.
 - Additional monitoring was implemented for related systems.
 
