@@ -112,7 +112,7 @@ DeviceNetworkEvents
 | Apr 24, 2025 5:12:01 PM          | TOR installer downloaded to `Downloads` folder                        |
 | Apr 24, 2025 5:16:40 PM          | Silent installation of TOR initiated                                  |
 | Apr 24, 2025 5:20:40 PM          | TOR browser launched via `firefox.exe` and `tor.exe`                  |
-| 2024-11-08T22:18:01              | Connection to 65.21.219.130:443 established via tor.exe
+| Apr 24, 2025 5:20:40 PM            | Connection to 65.21.219.130:443 established via tor.exe
 | Apr 24, 2025 5:25:28 PM          | `tor-shopping-list.txt` file created on Desktop                       |
 
 ---
