@@ -1,0 +1,13 @@
+// KQL Query: Detect connections to known Tor exit nodes
+// Description: This query identifies outbound network connections to IPs associated with the Tor network,
+// potentially indicating unauthorized anonymous browsing or attempts to evade monitoring controls.
+
+let TorExitNodes = dynamic([
+    "185.220.101.1", "104.244.76.13", "51.83.47.18", // Add more known Tor exit IPs here
+    "116.202.120.169", "176.10.99.200", "162.247.74.200"
+]);
+
+DeviceNetworkEvents
+| where RemoteIP in (TorExitNodes)
+| project Timestamp=TimeGenerated, DeviceName, InitiatingProcessFileName, InitiatingProcessCommandLine, RemoteIP, RemoteUrl, ReportId
+| order by Timestamp desc
