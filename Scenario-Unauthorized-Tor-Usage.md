@@ -1,6 +1,6 @@
 
 # 🕵️‍♂️ Threat-Hunting Report: Unauthorized TOR Usage
-![386502_browser_onion_tor_icon (1)](https://github.com/user-attachments/assets/f6ab749e-37ce-48de-9a6b-17bf759ca06f)
+![383d480974ce76619f0e4f765c37b900](https://github.com/user-attachments/assets/c758410b-d0b5-48ef-93ea-f4c87b1f1cef)
 ---
 
 ## 🔗 Scenario Reference
