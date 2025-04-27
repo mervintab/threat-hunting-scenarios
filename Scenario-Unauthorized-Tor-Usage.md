@@ -1,6 +1,6 @@
 
 # 🕵️‍♂️ Threat-Hunting Report: Unauthorized TOR Usage
-<img width="400" src="https://github.com/user-attachments/assets/44bac428-01bb-4cd0-826a-52c01980664e/tor-hunt-banner.png" alt="Tor Logo with Onion and Crosshair"/>
+![386502_browser_onion_tor_icon](https://github.com/user-attachments/assets/1fe251fd-898a-4ded-8d67-f6b725c1d4bc)
 
 ---
 
