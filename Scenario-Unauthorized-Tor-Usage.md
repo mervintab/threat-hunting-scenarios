@@ -1,5 +1,8 @@
-# 🕵️‍♂️ Threat-Hunting Scenarios: Unauthorized TOR Usage
-<img width="400" src="https://github.com/user-attachments/assets/44bac428-01bb-4fe9-9d85-96cba7698bee" alt="Tor Logo with the onion and a crosshair on it"/>
+
+# 🕵️‍♂️ Threat-Hunting Report: Unauthorized TOR Usage
+<img width="400" src="https://github.com/user-attachments/assets/44bac428-01bb-4cd0-826a-52c01980664e/tor-hunt-banner.png" alt="Tor Logo with Onion and Crosshair"/>
+
+---
 
 ## 🔗 Scenario Reference
 - [Scenario Creation Guide](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/threat-hunting-scenario-tor-event-creation.md)
@@ -7,56 +10,61 @@
 ---
 
 ## ⚙️ Platforms & Tools Used
-- **Operating System:** Windows 10 Virtual Machines (Azure)
-- **Security Stack:** Microsoft Defender for Endpoint (MDE)
+- **Operating System:** Windows 10 Virtual Machines (Azure-hosted)
+- **Security Stack:** Microsoft Defender for Endpoint (MDE), Microsoft Sentinel (optional extension)
 - **Scripting & Querying:** Kusto Query Language (KQL)
-- **Software in Scope:** Tor Browser
+- **Software in Scope:** Tor Browser Bundle (tor.exe, firefox.exe, tor-browser.exe)
 
 ---
 
 ## 🧠 Scenario Overview
 
 **Suspicion:**  
-Unusual encrypted traffic patterns in the network and anonymous reports of employees discussing access to restricted sites have prompted management to suspect TOR browser usage on corporate endpoints.
+Network security monitoring revealed unusual encrypted traffic patterns. Additionally, anonymous internal reports alleged that employees were discussing bypassing security controls to access restricted content, prompting concerns about TOR usage.
 
 **Objective:**  
-Detect TOR usage, validate associated indicators of compromise (IoCs), and assess the scope of any malicious behavior. Immediate management notification if TOR activity is confirmed.
+- Detect unauthorized use of the TOR browser.
+- Confirm artifacts (files, processes, network traffic).
+- Assess potential data exfiltration or policy violation risks.
+- Report and initiate corrective actions immediately if validated.
 
 ---
 
 ## 🗺️ IoC Discovery Plan
 
-- **`DeviceFileEvents`:** Look for TOR-related files (`tor.exe`, `firefox.exe`, etc.)
-- **`DeviceProcessEvents`:** Detect TOR browser installation or execution.
-- **`DeviceNetworkEvents`:** Identify outbound connections on known TOR network ports.
+- **DeviceFileEvents:** Search for TOR-related file downloads or artifacts.
+- **DeviceProcessEvents:** Identify TOR installation and execution processes.
+- **DeviceNetworkEvents:** Detect anomalous outbound network connections on TOR-specific ports (e.g., 9001, 9030, 9040, 9050, 9051, 9150).
+- **Advanced:** (Optional) Hunt for signs of encrypted or anonymized traffic patterns.
 
 ---
 
 ## 🔍 Investigation Steps & Results
 
-### 1. 🗂 File Activity Search
+### 1. 🗂️ File Activity Search
 
 **Observation:**  
-User "employee" downloaded and extracted TOR browser files, including `tor-shopping-list.txt`, onto the desktop.
+User account `system` downloaded and extracted TOR browser components. Presence of a file `tor-shopping-list.txt` indicated potential preparation for hidden activities.
 
 **KQL Query:**
 ```kql
 DeviceFileEvents
 | where DeviceName == "merv-winten-lab"
-| where FileName has_any ("tor")
+| where FileName has_any ("tor", "tor-browser", "firefox")
 | order by Timestamp desc
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, Account = InitiatingProcessAccountName
-
-
 ```
-![tor1](https://github.com/user-attachments/assets/2a84964f-00b0-4310-94f8-a79018e693ea)
+
+**Result:**
+- `tor-browser-windows-x86_64-portable-14.5.exe` downloaded to `Downloads` folder.
+- `tor-shopping-list.txt` created on Desktop.
 
 ---
 
 ### 2. ⚙️ Silent TOR Installation
 
 **Observation:**  
-TOR was installed silently via an executable run from the Downloads folder.
+Installation was performed without significant user prompts, indicative of deliberate concealment.
 
 **KQL Query:**
 ```kql
@@ -65,14 +73,16 @@ DeviceProcessEvents
 | where ProcessCommandLine contains "tor-browser-windows-x86_64-portable-14.5.exe"
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, SHA256, ProcessCommandLine
 ```
-![tor2](https://github.com/user-attachments/assets/15c8064b-bf99-436f-8a7d-a64a5d6bec0f)
+
+**Result:**
+- TOR Browser was executed directly from the Downloads folder.
 
 ---
 
 ### 3. 🚀 TOR Browser Execution Detected
 
-**Observation:**  
-The TOR browser and associated processes were launched, confirming execution.
+**Observation:**
+Multiple TOR-related executables (tor.exe, firefox.exe) were launched post-installation.
 
 **KQL Query:**
 ```kql
@@ -82,14 +92,17 @@ DeviceProcessEvents
 | project Timestamp, DeviceName, AccountName, ActionType, FileName, FolderPath, SHA256, ProcessCommandLine
 | order by Timestamp desc
 ```
-![tor3](https://github.com/user-attachments/assets/4ed8415b-dfb0-4cd0-826a-52c01980664e)
+
+**Result:**
+- TOR browser was run almost immediately after installation.
+- Launch occurred outside normal business hours.
 
 ---
 
 ### 4. 🌐 TOR Network Connections Established
 
-**Observation:**  
-TOR browser initiated multiple connections to known TOR ports and IP addresses.
+**Observation:**
+Outbound communications detected to TOR-related IPs and ports.
 
 **KQL Query:**
 ```kql
@@ -101,37 +114,73 @@ DeviceNetworkEvents
 | project Timestamp, DeviceName, InitiatingProcessAccountName, ActionType, RemoteIP, RemotePort, RemoteUrl, InitiatingProcessFileName, InitiatingProcessFolderPath
 | order by Timestamp desc
 ```
-![tor4](https://github.com/user-attachments/assets/e2086484-2f62-46ef-80c5-15b4c8452e1a)
+
+**Result:**
+- Connections initiated to known TOR nodes at `65.21.219.130:443` and others.
+- Connections to standard HTTPS (443) observed, blending into normal traffic.
 
 ---
 
-## 🕓 Event Timeline (Chronological)
+### 5. 👉 Additional Checks (Recommended)
+- Check `DeviceRegistryEvents` for TOR-related startup persistence.
+- Check `DeviceLogonEvents` for user activity spike correlating to TOR usage.
+- Investigate `DeviceImageLoadEvents` for additional malicious DLLs loaded during TOR session.
 
-| **Timestamp (UTC)**              | **Event Description**                                                 |
-|----------------------------------|------------------------------------------------------------------------|
-| Apr 24, 2025 5:12:01 PM          | TOR installer downloaded to `Downloads` folder                        |
-| Apr 24, 2025 5:16:40 PM          | Silent installation of TOR initiated                                  |
-| Apr 24, 2025 5:20:40 PM          | TOR browser launched via `firefox.exe` and `tor.exe`                  |
-| Apr 24, 2025 5:20:40 PM            | Connection to 65.21.219.130:443 established via tor.exe
-| Apr 24, 2025 5:25:28 PM          | `tor-shopping-list.txt` file created on Desktop                       |
+---
+
+## 🕒 Event Timeline (Chronological)
+
+| **Timestamp (UTC)**              | **Event Description**                                                     |
+|-----------------------------------|---------------------------------------------------------------------------|
+| Apr 24, 2025 5:12:01 PM           | TOR installer downloaded to `Downloads` folder                           |
+| Apr 24, 2025 5:16:40 PM           | Silent installation of TOR initiated from executable                    |
+| Apr 24, 2025 5:20:40 PM           | TOR browser launched via `tor.exe` and `firefox.exe`                     |
+| Apr 24, 2025 5:20:40 PM           | Outbound connection to TOR entry node `65.21.219.130:443` established    |
+| Apr 24, 2025 5:25:28 PM           | `tor-shopping-list.txt` file created and accessed on Desktop             |
+| Apr 24, 2025 5:30:00 PM           | Additional TOR circuits built (multiple IPs contacted)                  |
 
 ---
 
 ## 📌 Summary of Findings
 
-- The user `system` on device `merv-winten-lab` installed and ran the TOR browser.
-- Multiple TOR-related processes were observed.
-- Outbound TOR network traffic was confirmed.
-- A text file possibly referencing TOR usage was found and later deleted.
+- **Confirmed:** TOR Browser installed and executed on corporate device `merv-winten-lab`.
+- **Confirmed:** Unauthorized outbound TOR network connections observed.
+- **Confirmed:** Downloaded TOR installer bypassed software policy.
+- **Confirmed:** User engaged in TOR usage without company approval.
 
-This strongly confirms unauthorized TOR activity by the employee.
+**No evidence** of immediate data exfiltration observed, but deeper forensic disk analysis is recommended.
 
 ---
 
 ## 🚨 Response Actions
 
-- Device `merv-winten-lab` was isolated from the network.
-- Direct manager of the user was notified.
-- Additional monitoring was implemented for related systems.
+- **Isolated** affected device `merv-winten-lab` from corporate network via MDE.
+- **Disabled** user account pending HR and security review.
+- **Notified** direct manager, HR, and IT compliance.
+- **Collected** volatile memory snapshot for deeper forensic analysis.
+- **Enabled** elevated monitoring on all endpoints for TOR-related indicators.
+- **Submitted** SHA256 hashes of TOR files to corporate threat intelligence platform.
+- **Drafted** incident notification for legal and compliance teams.
 
 ---
+
+## 🔎 Recommended Next Steps
+
+- Conduct a **full disk forensic image** of `merv-winten-lab`.
+- Review **internal communications (email, chat)** for TOR-related planning.
+- Implement **network egress filtering** to block known TOR nodes.
+- Update **Acceptable Use Policies (AUP)** to explicitly prohibit anonymizers.
+- Provide **employee cybersecurity awareness training**.
+- Deploy **Sentinel Hunting Queries** for early detection of future anonymized traffic.
+
+---
+
+# 📅 Incident Closure Target: Within 5 Business Days  
+**Owner:** Cybersecurity Incident Response Team (CSIRT)
+
+---
+
+# ✨ End of Report
+
+---
+
