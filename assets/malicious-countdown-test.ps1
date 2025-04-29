@@ -1,7 +1,7 @@
 # Define the path for the countdown batch file
-$timerScriptPath = "$env:TEMP\2min_timer.bat"
+$timerScriptPath = "$env:TEMP\2min_timer_with_pause.bat"
 
-# Create the batch file with 2-minute countdown logic
+# Create the batch file with 2-minute countdown logic and pause for user input
 $scriptContent = @"
 @echo off
 setlocal EnableDelayedExpansion
@@ -17,7 +17,8 @@ set /a duration-=1
 if !duration! gtr 0 goto loop
 
 echo Time's up!
-timeout /t 3 >nul
+echo Press any key to continue...
+pause >nul
 exit
 "@
 
@@ -25,4 +26,3 @@ exit
 Set-Content -Path $timerScriptPath -Value $scriptContent
 
 # Run the timer in a new CMD window
-Start-Process cmd.exe -ArgumentList "/c `"$timerScriptPath`""
