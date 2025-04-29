@@ -73,9 +73,7 @@ eviceFileEvents
 | where not(InitiatingProcessCommandLine has "svchost.exe")
 | project Timestamp, ActionType, FileName, FolderPath, SHA256, InitiatingProcessAccountName, InitiatingProcessCommandLine
 | order by Timestamp desc
-
 ---
-
 ### 3. Searched for Movement to Temp Folder
 
 **Objective:** Detect file movement from `Downloads` to `Temp`.
@@ -83,9 +81,19 @@ eviceFileEvents
 **Query used:**
 ```kql
 DeviceFileEvents
-| where PreviousFolderPath endswith @"\\Downloads"
-| where FolderPath endswith @"\\Temp"
-| project Timestamp, DeviceName, FileName, PreviousFolderPath, FolderPath, InitiatingProcessAccountName
+| where DeviceName == "merv-stigs-vm"
+| where Timestamp > datetime(2025-04-29T15:50:01.7829214Z)
+| where not(InitiatingProcessCommandLine has "svchost.exe")
+| where PreviousFolderPath  has_any("Downloads") 
+| where FolderPath  has_any("Temp") 
+| where FileName matches regex "^[A-Za-z0-9+/=]{10,}\\.(ps1|cmd|bat|vbs|js|exe|dll)$"
+   or FileName endswith ".ps1"
+   or FileName endswith ".exe"
+   or FileName endswith ".cmd"
+   or FileName endswith ".bat"
+   or FileName endswith ".vbs"
+| project Timestamp, ActionType, FileName, FolderPath, SHA256, InitiatingProcessAccountName, InitiatingProcessCommandLine
+| order by Timestamp desc
 ```
 
 **Findings:**  
