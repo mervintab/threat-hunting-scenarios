@@ -1,4 +1,3 @@
-
 # Define URLs and Paths
 $downloadUrl = "https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/malicious-countdown-test.ps1"
 $downloadsPath = "$env:USERPROFILE\Downloads"
