@@ -1,10 +1,11 @@
-# Create a temporary batch file to run a 1-minute countdown timer
-$timerScriptPath = "$env:TEMP\1min_timer.bat"
+# Define the path for the countdown batch file
+$timerScriptPath = "$env:TEMP\2min_timer.bat"
 
+# Create the batch file with 2-minute countdown logic
 $scriptContent = @"
 @echo off
 setlocal EnableDelayedExpansion
-set /a duration=60
+set /a duration=120
 
 :loop
 cls
@@ -20,6 +21,7 @@ timeout /t 3 >nul
 exit
 "@
 
+# Save the batch file
 Set-Content -Path $timerScriptPath -Value $scriptContent
 
 # Run the timer in a new CMD window
