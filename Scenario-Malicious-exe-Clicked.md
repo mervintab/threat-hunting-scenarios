@@ -127,6 +127,7 @@ DeviceRegistryEvents
 
 **Findings:**  
 The above query did not generate useful information either. But manual inspection confirmed that a suspicious scheduled task named `MaliciousCountdownObfuscated` was created to repeatedly run the malicious script every 5 minutes.
+![Screenshot 2025-04-29 152127](https://github.com/user-attachments/assets/26279995-0345-4a9f-971e-fb25aec54af0)
 
 ---
 
