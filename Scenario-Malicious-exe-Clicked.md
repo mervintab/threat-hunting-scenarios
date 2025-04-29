@@ -1,7 +1,7 @@
 
 
 # Threat Hunt Report: Unauthorized Malicious PowerShell Script Execution
-- [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Malicious-calc-Event_creation.md)
+- [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Create-Malicious-link-malware.md)
 
 ## Platforms and Tools Leveraged
 - Windows 10 Virtual Machines (Microsoft Azure)
