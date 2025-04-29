@@ -100,6 +100,36 @@ DeviceFileEvents
 *It was found out during the above investigation that the malicous powershell file was automatically renamed by converting the file name into its base64 equivalent (bWFsaWNpb3VzLWNvdW50ZG93bi10ZXN0LnBzMQ==.ps1). This was proven by entering the filename into Cyberchef*
 ![Screenshot 2025-04-29 125028](https://github.com/user-attachments/assets/986e8dfb-87c3-4b5f-9412-0bcb606aa958)
 *The ps1 file in question was found in the Temp folder location mentioned above. Upon investigation on the file in question, running the file will cause the system to spin up a suspicous file which was named eicar_file.txt*
+
+```powershell
+# Create a temporary batch file to run a 1-minute countdown timer
+$timerScriptPath = "$env:TEMP\1min_timer.bat"
+
+$scriptContent = @"
+@echo off
+setlocal EnableDelayedExpansion
+set /a duration=60
+
+:loop
+cls
+set /a minutes=!duration!/60
+set /a seconds=!duration!%%60
+echo Countdown Timer: !minutes! minute(s) and !seconds! second(s) remaining...
+timeout /t 1 >nul
+set /a duration-=1
+if !duration! gtr 0 goto loop
+
+echo Time's up!
+timeout /t 3 >nul
+exit
+"@
+
+Set-Content -Path $timerScriptPath -Value $scriptContent
+
+# Run the timer in a new CMD window
+Start-Process cmd.exe -ArgumentList "/c `"$timerScriptPath`""
+
+
 ![Screenshot 2025-04-29 140733](https://github.com/user-attachments/assets/3d41e754-04ba-4c5e-aa3c-597729429912)
 
 ---
