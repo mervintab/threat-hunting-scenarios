@@ -50,7 +50,7 @@ DeviceFileEvents
 ```
 
 **Findings:**  
-*Pending - to be filled after running the scenario.*
+*During the initial investigation and using the query above, it was found out that the user clicked and downloaded a powershell file named malicious-countdown-test.ps1 from an unknown online source.*
 ![Screenshot 2025-04-29 124056](https://github.com/user-attachments/assets/a93dc45d-1467-4841-9169-9096f727186c)
 
 
@@ -68,6 +68,7 @@ DeviceFileEvents
 
 **Findings:**  
 *Pending - to be filled after running the scenario.*
+![Screenshot 2025-04-29 125028](https://github.com/user-attachments/assets/7c10fcd4-b169-4e0b-9fe5-7690e9e5054d)
 
 ---
 
