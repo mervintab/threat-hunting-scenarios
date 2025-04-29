@@ -60,14 +60,19 @@ DeviceFileEvents
 
 **Query used:**
 ```kql
-DeviceFileEvents
-| where FolderPath endswith @"\\Downloads" or FolderPath endswith @"\\Temp"
+eviceFileEvents
+| where DeviceName == "merv-stigs-vm"
+| where Timestamp > datetime(2025-04-29T15:50:01.7829214Z)
+| where FolderPath has_any("Downloads")
 | where FileName matches regex "^[A-Za-z0-9+/=]{10,}\\.(ps1|cmd|bat|vbs|js|exe|dll)$"
-| project Timestamp, DeviceName, ActionType, FileName, FolderPath, InitiatingProcessAccountName
-
-
-**Findings:**  
-*Pending - to be filled after running the scenario.*
+   or FileName endswith ".ps1"
+   or FileName endswith ".exe"
+   or FileName endswith ".cmd"
+   or FileName endswith ".bat"
+   or FileName endswith ".vbs"
+| where not(InitiatingProcessCommandLine has "svchost.exe")
+| project Timestamp, ActionType, FileName, FolderPath, SHA256, InitiatingProcessAccountName, InitiatingProcessCommandLine
+| order by Timestamp desc
 
 ---
 
@@ -84,7 +89,8 @@ DeviceFileEvents
 ```
 
 **Findings:**  
-*Pending - to be filled after running the scenario.*
+*It was found out during the above investigation that the malicous powershell file was automatically renamed by converting the file name into its base64 equivalent (bWFsaWNpb3VzLWNvdW50ZG93bi10ZXN0LnBzMQ==.ps1). This was proven by entering the filename into Cyberchef*
+![Screenshot 2025-04-29 125028](https://github.com/user-attachments/assets/986e8dfb-87c3-4b5f-9412-0bcb606aa958)
 
 ---
 
