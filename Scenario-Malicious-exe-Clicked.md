@@ -85,9 +85,10 @@ DeviceFileEvents
 **Query used:**
 ```kql
 DeviceProcessEvents
-| where InitiatingProcessFileName == "cmd.exe"
-| where ProcessCommandLine contains "Countdown Timer"
-| project Timestamp, DeviceName, AccountName, ActionType, ProcessCommandLine
+| where InitiatingProcessFileName == "cmd.exe" or InitiatingProcessFileName endswith ".ps1" or InitiatingProcessFileName endswith ".cmd"
+| where ProcessCommandLine matches regex ".*[A-Za-z0-9+/=]{10,}\\.(ps1|cmd|bat|vbs|js|exe|dll).*"
+| project Timestamp, DeviceName, AccountName, ActionType, InitiatingProcessFileName, ProcessCommandLine
+
 ```
 
 **Findings:**  
@@ -102,9 +103,10 @@ DeviceProcessEvents
 **Query used:**
 ```kql
 DeviceRegistryEvents
+| where Timestamp > ago(24h)
 | where RegistryKey endswith @"\\Microsoft\\Windows\\CurrentVersion\\TaskCache\\Tasks"
-| where RegistryValueData has "malicious-countdown-test.ps1"
 | project Timestamp, DeviceName, InitiatingProcessAccountName, RegistryKey, RegistryValueName, RegistryValueData
+
 ```
 
 **Findings:**  
