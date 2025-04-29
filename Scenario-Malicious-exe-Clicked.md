@@ -34,15 +34,18 @@ The investigation will focus on tracing file creation, process executions, and p
 **Query used:**
 ```kql
 DeviceFileEvents
-| where Timestamp > ago(24h)
-| where FolderPath endswith @"\\Downloads"
+| where DeviceName == "merv-stigs-vm"
+| where Timestamp > ago(1h)
+| where FolderPath has_any("Downloads")
 | where FileName has_any ("malicious*", "payload*", "update*", "script*", "install*")
    or FileName endswith ".ps1"
    or FileName endswith ".exe"
    or FileName endswith ".cmd"
    or FileName endswith ".bat"
    or FileName endswith ".vbs"
-| project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, InitiatingProcessAccountName
+| where not(InitiatingProcessCommandLine has "svchost.exe")
+| project Timestamp, ActionType, FileName, FolderPath, SHA256, InitiatingProcessAccountName, InitiatingProcessCommandLine
+| order by Timestamp desc
 
 ```
 
