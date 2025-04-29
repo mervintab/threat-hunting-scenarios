@@ -2,7 +2,7 @@
 <img width="400" src="https://github.com/user-attachments/assets/44bac428-01bb-4fe9-9d85-96cba7698bee" alt="Calculator Icon with Warning"/>
 
 # Threat Hunt Report: Unauthorized Malicious Calculator Installation
-- [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Windows%20Calculator%20Installer.exe)
+- [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Malicious-calc-Event_creation.md)
 
 ## Platforms and Tools Leveraged
 - Windows 10 Virtual Machines (Microsoft Azure)
