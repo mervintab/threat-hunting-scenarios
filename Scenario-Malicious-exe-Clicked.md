@@ -49,6 +49,7 @@ DeviceFileEvents
 
 **Findings:**  
 A user downloaded a malicious PowerShell file named `malicious-countdown-test.ps1` from an unknown online source.
+![Screenshot 2025-04-29 124056](https://github.com/user-attachments/assets/d873154c-c17c-42ba-8615-f3ab1be76d4f)
 
 ---
 
@@ -68,7 +69,8 @@ DeviceFileEvents
 ```
 
 **Findings:**  
-The PowerShell file was automatically renamed into its base64 equivalent: `bWFsaWNpb3VzLWNvdW50ZG93bi10ZXN0LnBzMQ==.ps1`.
+The PowerShell file was automatically renamed into its base64 equivalent: `bWFsaWNpb3VzLWNvdW50ZG93bi10ZXN0LnBzMQ==.ps1`. 
+![Screenshot 2025-04-29 125028](https://github.com/user-attachments/assets/34c16d51-3e25-4c62-8125-a5b73e5b3b64)
 
 ---
 
@@ -89,7 +91,8 @@ DeviceFileEvents
 ```
 
 **Findings:**  
-The obfuscated script was found moved to the Temp folder. Running this file generated a suspicious `eicar_file.txt` on the Desktop.
+The obfuscated script was found moved to the Temp folder. Upon manual inspection of the powershell script, it was discovered that when the file is run, suspicious `eicar_file.txt` will be generated on the desktop on the Desktop.
+![Screenshot 2025-04-29 140635](https://github.com/user-attachments/assets/fa772d4a-f189-49bf-b6c1-e2bebdaecbaf)
 
 ---
 
@@ -106,7 +109,7 @@ DeviceProcessEvents
 ```
 
 **Findings:**  
-The file executed successfully and triggered a popup that notified "Time's Up!" followed by EICAR file creation.
+The above query did not generate useful information. THe machine in question was manually checked for evidence. It was confirmed that the file executed successfully and triggered a popup that notified "Time's Up!" followed by EICAR file creation.
 
 ---
 
@@ -123,7 +126,7 @@ DeviceRegistryEvents
 ```
 
 **Findings:**  
-Manual inspection confirmed that a suspicious scheduled task named `MaliciousCountdownObfuscated` was created to repeatedly run the malicious script every 5 minutes.
+The above query did not generate useful information either. But manual inspection confirmed that a suspicious scheduled task named `MaliciousCountdownObfuscated` was created to repeatedly run the malicious script every 5 minutes.
 
 ---
 
