@@ -1,7 +1,7 @@
 
 <img width="400" src="https://github.com/user-attachments/assets/44bac428-01bb-4fe9-9d85-96cba7698bee" alt="Calculator Icon with Warning"/>
 
-# Threat Hunt Report: Unauthorized Malicious Calculator Installation
+# Threat Hunt Report: Unauthorized Malicious PowerShell Script Execution
 - [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Malicious-calc-Event_creation.md)
 
 ## Platforms and Tools Leveraged
@@ -14,7 +14,7 @@
 
 Management has requested an urgent investigation after reports of users receiving suspicious links that could lead to unauthorized application installations. Additionally, unusual scheduled tasks were detected in several endpoints without known administrative approval. The goal is to detect any malicious file downloads, suspicious file renames, unauthorized scheduled task creations, and popup messages hinting at unauthorized installs.
 
-The investigation will focus on tracing file creation, process executions, and persistence mechanisms related to the fake `calculator.exe`.
+The investigation will focus on tracing file creation, process executions, and persistence mechanisms related to the fake `malicious_calculator_install.ps1`.
 
 ---
 
@@ -23,7 +23,7 @@ The investigation will focus on tracing file creation, process executions, and p
 - **Check `DeviceFileEvents`** for download of suspicious executables into the `Downloads` folder.
 - **Check `DeviceFileEvents`** for unusual file renames using base64 encoding.
 - **Check `DeviceFileEvents`** for movements into the `Temp` folder.
-- **Check `DeviceProcessEvents`** for executions of renamed calculator.exe and popup messages.
+- **Check `DeviceProcessEvents`** for executions of renamed malicious_calculator_install.ps1 and popup messages.
 - **Check `DeviceRegistryEvents`** for suspicious Scheduled Task creations.
 
 ---
@@ -38,7 +38,7 @@ The investigation will focus on tracing file creation, process executions, and p
 ```kql
 DeviceFileEvents
 | where FolderPath endswith @"\\Downloads"
-| where FileName has_any ("Windows Calculator Installer.exe", "Windows%20Calculator%20Installer.exe")
+| where FileName has_any ("malicious_calculator_install.ps1", "Windows%20Calculator%20Installer.exe")
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, InitiatingProcessAccountName
 ```
 
@@ -89,7 +89,7 @@ DeviceFileEvents
 ```kql
 DeviceProcessEvents
 | where InitiatingProcessFileName == "cmd.exe"
-| where ProcessCommandLine contains "Calculator successfully installed"
+| where ProcessCommandLine contains "Countdown Timer"
 | project Timestamp, DeviceName, AccountName, ActionType, ProcessCommandLine
 ```
 
@@ -106,7 +106,7 @@ DeviceProcessEvents
 ```kql
 DeviceRegistryEvents
 | where RegistryKey endswith @"\\Microsoft\\Windows\\CurrentVersion\\TaskCache\\Tasks"
-| where RegistryValueData has "calculator.exe"
+| where RegistryValueData has "malicious_calculator_install.ps1"
 | project Timestamp, DeviceName, InitiatingProcessAccountName, RegistryKey, RegistryValueName, RegistryValueData
 ```
 
