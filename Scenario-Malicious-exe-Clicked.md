@@ -51,6 +51,7 @@ DeviceFileEvents
 
 **Findings:**  
 *Pending - to be filled after running the scenario.*
+![Screenshot 2025-04-29 124056](https://github.com/user-attachments/assets/a93dc45d-1467-4841-9169-9096f727186c)
 
 ---
 
