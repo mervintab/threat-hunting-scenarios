@@ -127,15 +127,25 @@ DeviceProcessEvents
 
 **Query used:**
 ```kql
-DeviceRegistryEvents
-| where Timestamp > ago(24h)
-| where RegistryKey endswith @"\\Microsoft\\Windows\\CurrentVersion\\TaskCache\\Tasks"
-| project Timestamp, DeviceName, InitiatingProcessAccountName, RegistryKey, RegistryValueName, RegistryValueData
+DeviceProcessEvents
+| where DeviceName == "merv-stigs-vm"
+| where Timestamp > datetime(2025-04-29T15:50:01.7829214Z)
+| where InitiatingProcessFileName in ("taskeng.exe", "svchost.exe", "services.exe")
+| project 
+    Timestamp, 
+    DeviceName, 
+    InitiatingProcessAccountName, 
+    InitiatingProcessFileName, 
+    InitiatingProcessCommandLine, 
+    FileName, 
+    ProcessCommandLine
+| order by Timestamp desc
 
 ```
 
 **Findings:**  
-*Pending - to be filled after running the scenario.*
+* The above query did not generate any useful information. So the analyst manually checked the Task Scheduler for any unusual event related to the time that the powershell script. The analyst found out that a new schedule was spun up, which validates the above information regarding the creation a scheduled task to create a text file named eicar_text.txt*
+![Screenshot 2025-04-29 152127](https://github.com/user-attachments/assets/d10faa38-eaa4-4e09-bb52-bde473c9edd7)
 
 ---
 
