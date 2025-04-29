@@ -2,7 +2,7 @@
 <img width="400" src="https://github.com/user-attachments/assets/44bac428-01bb-4fe9-9d85-96cba7698bee" alt="Calculator Icon with Warning"/>
 
 # Threat Hunt Report: Unauthorized Malicious PowerShell Script Execution
-- [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Malicious-link-malware.md)
+- [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Malicious-calc-Event_creation.md)
 
 ## Platforms and Tools Leveraged
 - Windows 10 Virtual Machines (Microsoft Azure)
@@ -119,17 +119,17 @@ DeviceRegistryEvents
 
 | **Timestamp** | **Event** | **Details** |  
 |---------------|-----------|-------------|  
-| _(To be filled)_ | File Download | User downloaded calculator installer |  
+| _(To be filled)_ | File Download | User downloaded malicious PowerShell countdown script |  
 | _(To be filled)_ | File Rename | File renamed to base64 format |  
 | _(To be filled)_ | File Move | Moved to Temp folder |  
-| _(To be filled)_ | Process Execution | Calculator installed and popup triggered |  
+| _(To be filled)_ | Process Execution | Countdown script executed in PowerShell and displayed in cmd.exe |  
 | _(To be filled)_ | Persistence | Scheduled Task created to maintain execution |
 
 ---
 
 ## Summary
 
-Pending — will summarize if the unauthorized calculator installation was successfully detected, and if persistence mechanisms were established.
+Pending — will summarize if the unauthorized PowerShell script execution was successfully detected, and if persistence mechanisms were established.
 
 ---
 
