@@ -68,8 +68,7 @@ DeviceFileEvents
 
 **Findings:**  
 *Pending - to be filled after running the scenario.*
-
-![Screenshot 2025-04-29 125028](https://github.com/user-attachments/assets/a943867a-e16b-44f8-8440-d0dd234f9485)
+![Screenshot 2025-04-29 125028](https://github.com/user-attachments/assets/857ec367-fa92-45f4-9970-19a3c61d1d34)
 
 ---
 
