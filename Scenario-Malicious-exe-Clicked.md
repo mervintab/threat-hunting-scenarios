@@ -1,5 +1,3 @@
-
-
 # Threat Hunt Report: Unauthorized Malicious PowerShell Script Execution
 - [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Create-Malicious-link-malware.md)
 
@@ -13,7 +11,7 @@
 
 Management has requested an urgent investigation after reports of users receiving suspicious links that could lead to unauthorized application installations. Additionally, unusual scheduled tasks were detected in several endpoints without known administrative approval. The goal is to detect any malicious file downloads, suspicious file renames, unauthorized scheduled task creations, and popup messages hinting at unauthorized installs.
 
-The investigation will focus on tracing file creation, process executions, and persistence mechanisms related to the fake `malicious_calculator_install.ps1`.
+The investigation will focus on tracing file creation, process executions, and persistence mechanisms related to the `malicious-countdown-test.ps1` file download.
 
 ---
 
@@ -22,7 +20,7 @@ The investigation will focus on tracing file creation, process executions, and p
 - **Check `DeviceFileEvents`** for download of suspicious executables into the `Downloads` folder.
 - **Check `DeviceFileEvents`** for unusual file renames using base64 encoding.
 - **Check `DeviceFileEvents`** for movements into the `Temp` folder.
-- **Check `DeviceProcessEvents`** for executions of renamed malicious_calculator_install.ps1 and popup messages.
+- **Check `DeviceProcessEvents`** for executions of renamed malicious-countdown-test.ps1 and popup messages.
 - **Check `DeviceRegistryEvents`** for suspicious Scheduled Task creations.
 
 ---
@@ -37,7 +35,7 @@ The investigation will focus on tracing file creation, process executions, and p
 ```kql
 DeviceFileEvents
 | where FolderPath endswith @"\\Downloads"
-| where FileName has_any ("malicious_calculator_install.ps1", "Windows%20Calculator%20Installer.exe")
+| where FileName has_any ("malicious*", "malicious-countdown-test.ps1")
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, SHA256, InitiatingProcessAccountName
 ```
 
@@ -54,9 +52,9 @@ DeviceFileEvents
 ```kql
 DeviceFileEvents
 | where FolderPath endswith @"\\Downloads" or FolderPath endswith @"\\Temp"
-| where FileName matches regex "^[A-Za-z0-9+/=]{10,}\.exe$"
+| where FileName matches regex "^[A-Za-z0-9+/=]{10,}\\.(ps1|cmd|bat|vbs|js|exe|dll)$"
 | project Timestamp, DeviceName, ActionType, FileName, FolderPath, InitiatingProcessAccountName
-```
+
 
 **Findings:**  
 *Pending - to be filled after running the scenario.*
@@ -105,7 +103,7 @@ DeviceProcessEvents
 ```kql
 DeviceRegistryEvents
 | where RegistryKey endswith @"\\Microsoft\\Windows\\CurrentVersion\\TaskCache\\Tasks"
-| where RegistryValueData has "malicious_calculator_install.ps1"
+| where RegistryValueData has "malicious-countdown-test.ps1"
 | project Timestamp, DeviceName, InitiatingProcessAccountName, RegistryKey, RegistryValueName, RegistryValueData
 ```
 
