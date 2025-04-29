@@ -52,7 +52,7 @@ DeviceFileEvents
 **Findings:**  
 *Pending - to be filled after running the scenario.*
 ![Screenshot 2025-04-29 124056](https://github.com/user-attachments/assets/a93dc45d-1467-4841-9169-9096f727186c)
-
+https://security.microsoft.com/v2/advanced-hunting?query=H4sIAJcBEWgAA-2UQUvDQBCF5yz4H0JPrbRCi3pTFGtRECnoUZCYBBtp09KkrQF_vN9MbBM1QVsvRSRsNvtm3tvZmZ10JZC5hOIx95iHzBcggUSSSCy7siOv4shCBmBThiPdAudGXBkZeszjSM1WU-wt2AleT8wt1iNsZWp3-ChHvVVrAnbCcGGOpS4dOcC7Ucrt4TEU39Z9GAk2x2L30VugnCGn7H3P08V_gXXI7JpPeUzLTOSnG_AVywPvSFLWdTupi5fmIURvhn0PtGlZmGBLV_vk-AyLb5EGBTRGY4rKBDxHQ_bKsjLkUTzLgmPPGEZZpF9PX5N9lGNpv592E34gL4zN-R5W_xf8R8vZ5vw5CsVqT2CP5RlvD6-yW9isuOmKnxlLqx7BTPHO8M_RNCvuqOK3colORw7lyNZXaIWm6to74v73LUrP4optV89umvbmcg89kY5irNvZye01-_hjz2nHlfVvleJ_B__tDi5WO0IroaLf99A53yOru-5xbT757cgqOcd7gJ9WLs9bY81_xzb9I37GLc_N8tRarSxCh0qkFf3u29pb_ZV0vAFHJsIJZAgAAA&timeRangeId=SetInQuery
 ---
 
 ### 2. Searched for Base64-Renamed Executables
