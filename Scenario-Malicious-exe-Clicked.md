@@ -2,7 +2,7 @@
 <img width="400" src="https://github.com/user-attachments/assets/44bac428-01bb-4fe9-9d85-96cba7698bee" alt="Calculator Icon with Warning"/>
 
 # Threat Hunt Report: Unauthorized Malicious PowerShell Script Execution
-- [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Malicious-calc-Event_creation.md)
+- [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Malicious-link-malware.md)
 
 ## Platforms and Tools Leveraged
 - Windows 10 Virtual Machines (Microsoft Azure)
