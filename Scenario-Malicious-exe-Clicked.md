@@ -99,9 +99,10 @@ DeviceFileEvents
 **Findings:**  
 *It was found out during the above investigation that the malicous powershell file was automatically renamed by converting the file name into its base64 equivalent (bWFsaWNpb3VzLWNvdW50ZG93bi10ZXN0LnBzMQ==.ps1). This was proven by entering the filename into Cyberchef*
 ![Screenshot 2025-04-29 125028](https://github.com/user-attachments/assets/986e8dfb-87c3-4b5f-9412-0bcb606aa958)
+*The ps1 file in question was found in the Temp folder location mentioned above. Upon investigation on the file in question, running the file will cause the system to spin up a suspicous file which was named eicar_file.txt*
+![Screenshot 2025-04-29 140733](https://github.com/user-attachments/assets/3d41e754-04ba-4c5e-aa3c-597729429912)
 
 ---
-
 ### 4. Searched the `DeviceProcessEvents` Table for Installation and Popup
 
 **Objective:** Detect popup messages signaling "successful" installation.
