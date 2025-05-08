@@ -13,7 +13,7 @@ while ($duration -ge 0) { ^
 Write-Host \"`nTime's up!\"; ^
 Write-Host \"Press any key to create the EICAR file...\"; ^
 [void][System.Console]::ReadKey($true); ^
-$eicarContent = 'X5O!P%%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*'; ^
+$eicarContent = 'You are a child of the universe no less than the trees and the stars; you have a right to be here!'; ^
 $desktopPath = [System.Environment]::GetFolderPath('Desktop'); ^
 $filePath = Join-Path $desktopPath 'eicar_file.txt'; ^
 Set-Content -Path $filePath -Value $eicarContent -Encoding ASCII; ^
