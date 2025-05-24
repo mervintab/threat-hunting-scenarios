@@ -4,7 +4,7 @@
 
 ## Steps the "Bad Actor" Took to Create Logs and IoCs:
 
-1. **Initiated a Port Scan** targeting a corporate IP range (`203.0.113.0/24`) using automated scanning tools such as Nmap or Masscan.
+1. **Initiated a Port Scan** targeting a corporate IP range (`20.246.91.5/24`) using automated scanning tools such as Nmap or Masscan.
 2. **Targeted Services** commonly found open on corporate networks (e.g., SSH (22), RDP (3389), HTTP (80), HTTPS (443), SMB (445)).
 3. **Conducted a Stealth Scan** (e.g., SYN scan or fragmented packets) to evade simple detection mechanisms.
 4. **Generated Multiple Connection Attempts** in a short time frame (e.g., hundreds of connection requests per minute).
