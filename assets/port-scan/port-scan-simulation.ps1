@@ -50,7 +50,7 @@ if (-not (Get-Command nmap -ErrorAction SilentlyContinue)) {
 
 # Define scan parameters
 $targetPorts = "22, 21, 23, 25, 53, 80, 110, 139, 143, 161, 389, 443, 445, 8080, 8443, 3389"
-$scanType = "-sS -f"  # SYN scan with fragmentation
+$scanType = "-sS -f -p- -A -T4 -v -oA"  # SYN scan with fragmentation
 $additionalOptions = "-T4 --open --randomize-hosts"
 $outputFile = "$env:TEMP\\nmap_scan_results.txt"
 
