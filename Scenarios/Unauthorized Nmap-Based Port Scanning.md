@@ -72,7 +72,7 @@ nmap -sS -f -T4 --open --randomize-hosts -p 22,3389,445,80,443 203.0.113.1-254
 **Objective:** Validate scan source and identify additional targets.
 
 **Findings:**  
-Firewall logs confirmed numerous connection attempts from `203.0.113.45` (external) and a secondary scan originating from internal IP `10.0.0.15`.  
+Firewall logs confirmed numerous connection attempts from `20.246.91.5` (external) and a secondary scan originating from internal IP `10.0.0.147`.  
 
 ---
 
@@ -80,10 +80,10 @@ Firewall logs confirmed numerous connection attempts from `203.0.113.45` (extern
 
 | **Timestamp** | **Event**           | **Details**                                      |
 |:--------------|:---------------------|:-------------------------------------------------|
-| 2025-05-24 10:00 | Port Scan Initiated | Nmap scan initiated targeting `203.0.113.1-254`. |
+| 2025-05-24 10:00 | Port Scan Initiated | Nmap scan initiated targeting `203.0.113.45`. |
 | 2025-05-24 10:01 | High-Volume Detected | >100 RDP/SMB connections detected. |
 | 2025-05-24 10:02 | Firewall Alert      | Perimeter firewall flagged excessive inbound connections. |
-| 2025-05-24 10:03 | Local Process Execution | Nmap found running on internal device `EDR-VM-01`. |
+| 2025-05-24 10:03 | Local Process Execution | Nmap found running on internal device `merv-threat-hunt`. |
 | 2025-05-24 10:04 | IDS Alert           | Internal IDS flagged potential lateral scanning behavior. |
 
 ---
@@ -103,7 +103,7 @@ This aligns with known tactics used in the **Reconnaissance** phase of adversary
 
 ## Response Taken
 
-- Disabled network access for the compromised internal host (`EDR-VM-01`).
+- Disabled network access for the compromised internal host (`merv-threat-hunt`).
 - Blocked IP `203.0.113.45` at the perimeter firewall.
 - Conducted forensic collection from the internal host.
 - Notified IT teams and implemented enhanced firewall rules.
