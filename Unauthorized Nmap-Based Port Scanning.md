@@ -1,6 +1,6 @@
 # Threat Hunt Report: Unauthorized Nmap-Based Port Scanning Simulation
 
-- [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Port-Scan-Simulation.md)
+- [Scenario Creation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/Create-Port-scan-Detected.md)
 
 ## Platforms and Tools Leveraged
 
