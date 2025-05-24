@@ -9,6 +9,9 @@
 3. **Conducted a Stealth Scan** (e.g., SYN scan or fragmented packets) to evade simple detection mechanisms.
 4. **Generated Multiple Connection Attempts** in a short time frame (e.g., hundreds of connection requests per minute).
 5. **Used a Spoofed or Anonymous Source IP Address** to obscure the attack origin.
+   
+- [Powershell file to run the Attacker Simulation](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/port-scan/port-scan-simulation.ps1)
+- [Batch file to specify the target IP and run the attacker port scan simulation powershell file.](https://github.com/mervintab/threat-hunting-scenarios/blob/main/assets/port-scan/RunPortScan.bat)
 
 ---
 
