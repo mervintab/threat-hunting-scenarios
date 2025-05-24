@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
-    Simulate a port scan on a user-specified IP address or range using Nmap with Execution Policy Bypass.
+    Simulate a comprehensive port scan on a user-specified IP address or range using Nmap with Execution Policy Bypass.
 .DESCRIPTION
-    This script accepts a target IP/range as input, checks for Nmap, installs it if missing, and runs the scan with logging.
+    This script accepts a target IP/range as input, checks for Nmap, installs it if missing, and runs a comprehensive scan with logging.
 #>
 
 param (
@@ -37,7 +37,6 @@ function Install-Nmap {
 if (-not (Get-Command nmap -ErrorAction SilentlyContinue)) {
     Write-Host "Nmap is not installed. Installing now..."
     Install-Nmap
-    # Recheck after installation
     if (-not (Get-Command nmap -ErrorAction SilentlyContinue)) {
         Write-Host "Nmap installation failed. Exiting."
         Add-Content -Path $logFile -Value "$(Get-Date) - Nmap installation failed. Exiting."
@@ -48,21 +47,19 @@ if (-not (Get-Command nmap -ErrorAction SilentlyContinue)) {
     }
 }
 
-# Define scan parameters
-$targetPorts = "22, 21, 23, 25, 53, 80, 110, 139, 143, 161, 389, 443, 445, 8080, 8443, 3389"
-$scanType = "-sS -f -p- -A -T4 -v -oA"  # SYN scan with fragmentation
-$additionalOptions = "-T4 --open --randomize-hosts"
-$outputFile = "$env:TEMP\\nmap_scan_results.txt"
+# Comprehensive scan parameters
+$scanType = "-sS -A -p- -T4 -v --open --randomize-hosts"  # SYN scan, OS detection, version detection, scripts, traceroute, all ports
+$outputFile = "$env:TEMP\\nmap_comprehensive_scan_results.txt"
 
 # Construct and run Nmap command
-$nmapCommand = "nmap $scanType $additionalOptions -p $targetPorts $TargetIPRange -oN `"$outputFile`""
-Write-Host "Starting Nmap scan on target: $TargetIPRange"
-Add-Content -Path $logFile -Value "$(Get-Date) - Starting Nmap scan on target: $TargetIPRange."
+$nmapCommand = "nmap $scanType $TargetIPRange -oN `"$outputFile`""
+Write-Host "Starting comprehensive Nmap scan on target: $TargetIPRange"
+Add-Content -Path $logFile -Value "$(Get-Date) - Starting comprehensive Nmap scan on target: $TargetIPRange."
 
 try {
-    Start-Process -FilePath "nmap" -ArgumentList "$scanType $additionalOptions -p $targetPorts $TargetIPRange -oN `"$outputFile`"" -NoNewWindow -Wait
+    Start-Process -FilePath "nmap" -ArgumentList "$scanType $TargetIPRange -oN `"$outputFile`"" -NoNewWindow -Wait
     if (Test-Path $outputFile) {
-        Write-Host "`nNmap scan completed. Results saved to $outputFile`n"
+        Write-Host "`nNmap comprehensive scan completed. Results saved to $outputFile`n"
         Add-Content -Path $logFile -Value "$(Get-Date) - Nmap scan completed. Results saved to $outputFile."
         Get-Content $outputFile
     } else {
@@ -74,6 +71,5 @@ try {
     Add-Content -Path $logFile -Value "$(Get-Date) - Error: $_"
 }
 
-Write-Host "Port scan simulation completed."
-Add-Content -Path $logFile -Value "$(Get-Date) - Port scan simulation completed."
-
+Write-Host "Comprehensive port scan simulation completed."
+Add-Content -Path $logFile -Value "$(Get-Date) - Comprehensive port scan simulation completed."
